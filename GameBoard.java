@@ -15,19 +15,53 @@ public class GameBoard {
   to "[X]".
   */
   public GameBoard(int boardWidth, int boardHeight) {
-    // your code goes here
+    gameBoard = new String [boardHeight][boardWidth];
+    for (int row = 0; row<gameBoard.length; row++)
+    {
+      for (int col = 0; col<gameBoard[0].length; col++)
+      {
+        gameBoard[row][col] = "[ ]";
+      }
+    }
+    gameBoard[0][0] = "[X]";
+    row = 0;
+    col = 0;
   }
 
   // Prints the game board w/ current player piece location.
   public void printGameBoard() {
-    // your code goes here
+    for (int row = 0; row<gameBoard.length; row++)
+    {
+      for (int col = 0; col<gameBoard[0].length; col++)
+      {
+        System.out.print(gameBoard[row][col]);
+      }
+    System.out.println();
+    }   
   }
 
   /* Checks if player can move.  Should be programmed so that
   player cannot move off of board.
   */
   private boolean checkIfCanMove(String moveCommand) {
-    // your code goes here
+    if (col<=0 && moveCommand.equals("L")){
+      return false;
+    }
+    else if (row<=0 && moveCommand.equals("U")){
+      return false;
+    }
+    else if (row>=gameBoard.length-1 && moveCommand.equals("D")){
+      return false;
+    }
+    else if (col>=gameBoard[0].length-1 && moveCommand.equals("R")){
+      return false;
+    }
+    else if (!moveCommand.equals("D") && !moveCommand.equals("U") && !moveCommand.equals("L") && !moveCommand.equals("R") && !moveCommand.equals("NM")) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   /* Moves player piece on board and makes a call to
@@ -41,6 +75,35 @@ public class GameBoard {
   them know that they cannot make that move.
   */
   public void move(String moveCommand) {
-    // your code goes here
+  if (checkIfCanMove(moveCommand)==false){
+    System.out.println("Your input is invalid. Please try again.");
   }
+  else if (moveCommand.equals("NM")){
+    printGameBoard();
+  }
+  else if (moveCommand.equals("R") && checkIfCanMove(moveCommand)==true){
+      gameBoard[row][col] = "[ ]";
+      col++;
+      gameBoard[row][col] = "[X]";
+      printGameBoard();
+  }
+  else if (moveCommand.equals("L") && checkIfCanMove(moveCommand)==true){
+      gameBoard[row][col] = "[ ]";
+      col--;
+      gameBoard[row][col] = "[X]";
+      printGameBoard();
+  }
+  else if (moveCommand.equals("U") && checkIfCanMove(moveCommand)==true){
+      gameBoard[row][col] = "[ ]";
+      row--;
+      gameBoard[row][col] = "[X]";
+      printGameBoard();
+  }
+  else if (moveCommand.equals("D") && checkIfCanMove(moveCommand)==true){
+      gameBoard[row][col] = "[ ]";
+      row++;
+      gameBoard[row][col] = "[X]";
+      printGameBoard();
+  }
+}
 }
